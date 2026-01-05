@@ -21,6 +21,8 @@ from tqdm import tqdm
 from utils import print_rank0
 import collections
 from typing import Dict, List, Any, Optional
+from dataclasses import dataclass
+from datetime import datetime
 
 # Import HUM Logger (integrated with EvaluationLogger)
 try:
@@ -598,7 +600,9 @@ class Trainer(TrainerBase):
                 data[key] = data[key].to(device)
 
     def save(self, path):
-        os.makedirs('/'.join(path.split('/')[:-1]), exist_ok=True)
+        dir_path = os.path.dirname(path)
+        if dir_path:
+            os.makedirs(dir_path, exist_ok=True)
         saved_parameters = {}
         model_generator = self.model.named_parameters() if not self.args.distributed else self.model.module.named_parameters()
         for param_name, param in model_generator:

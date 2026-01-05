@@ -23,6 +23,7 @@ class DataSequential(Dataset):
         self.tokenized_text = tokenized_text
         self.tokenized_domain = tokenized_domain
         self.token_id_dict = token_id_dict
+        self.sep_token_id = token_id_dict.get('<|emb|>', 151665)
         self.mode = mode
         self.length = 0
         self.data = None
